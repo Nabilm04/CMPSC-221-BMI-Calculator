@@ -1,0 +1,63 @@
+// MUSFIQUR NABIL CMPSC 221 FALL 2023
+// PLUGGED CODE INTO CHATGPT TO FIX ERRORS
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+public class Main extends Application {
+    private TextField heightTextField;
+    private TextField weightTextField;
+    private Label resultLabel;
+
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("BMI Calculator"); // Named Application
+        heightTextField = new TextField();
+        heightTextField.setPromptText("HEIGHT (M)"); // Input 
+
+        weightTextField = new TextField();
+        weightTextField.setPromptText("WEIGHT (KG)"); // Input
+
+        resultLabel = new Label();
+
+        Button calculateButton = new Button("CALCULATE"); // ActionEvent that runs the calculations
+        calculateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calculateBMI();
+            }
+        });
+
+        VBox vbox = new VBox(heightTextField, weightTextField, calculateButton, resultLabel);
+        vbox.setSpacing(20);
+        vbox.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(vbox, 300, 200);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void calculateBMI() {
+        try {
+            double height = Double.parseDouble(heightTextField.getText());
+            double weight = Double.parseDouble(weightTextField.getText());
+            double bmi = weight / (height * height);
+            resultLabel.setText(String.format("BMI: %.2f", bmi));
+
+        } catch (NumberFormatException e) {
+            resultLabel.setText("Invalid input. Please enter valid numbers.");
+        } // Displays BMI
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
